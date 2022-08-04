@@ -1,60 +1,153 @@
+#![deny(missing_docs)]
+
+//! # Iknow
+//! A self-describing knowledge format with support for Rust-like syntax
+//!
+//! ### Motivation
+//!
+//! Bootstrap knowledge format from a root knowledge format
+//! that is capable of describing other knowledge formats.
+//!
+//! ### Self-Description of Root Knowledge Structure
+//!
+//! The following is both valid Rust code and Iknow format.
+//! It describes the internal representation of the Iknow format in Rust.
+//!
+//! "assets/self_root.txt":
+//! ```text
+//! enum Root {
+//!     Ty(Arc<String>),
+//!     Str(Arc<String>),
+//!     F64(f64),
+//!     Bool(bool),
+//!     Avatar(Box<(Self, Self)>),
+//!     Tup(Vec<Self>),
+//!     Struct {name: Box<Self>, fields: Vec<Self>},
+//!     Enum {name: Box<Self>, variants: Vec<Self>},
+//!     Instance {class: usize, data: Option<Box<Self>>},
+//!     InstanceTy {ty: Box<Self>, data: Option<Box<Self>>},
+//! }
+//! ```
+//!
+//! ### Generic Version
+//!
+//! The root knowledge format can describe a generic version of itself.
+//! This is not valid Rust code, due to a limitation
+//! in how to annotate a custom/generic type using `.` before the name, e.g. `.T`.
+//!
+//! "source/test/generics/gen_root.txt":
+//! ```text
+//! enum Root<.T> {
+//!     Ty(Arc<String>),
+//!     Val(.T),
+//!     Avatar(Box<(Self<.T>, Self<.T>)>),
+//!     Tup(Vec<Self<.T>>),
+//!     Struct {name: Box<Self<.T>>, fields: Vec<Self<.T>>},
+//!     Enum {name: Box<Self<.T>>, variants: Vec<Self<.T>>},
+//!     Instance {class: usize, data: Option<Box<Self<.T>>>},
+//!     InstanceTy {ty: Box<Self<.T>>, data: Option<Box<Self<.T>>>},
+//! }
+//! ```
+
 use std::sync::Arc;
 use std::fmt;
 
 pub mod parsing;
 
+/// Root knowledge structure.
 #[derive(Debug, PartialEq)]
 pub enum Root {
+    /// A type.
     Ty(Arc<String>),
+    /// A string value.
     Str(Arc<String>),
+    /// An f64 value.
     F64(f64),
+    /// A boolean value.
     Bool(bool),
+    /// Describes an avatar, e.g. `Option<.T>`,
+    /// where `Option` is the avatar and `.T` is the core.
     Avatar(Box<(Self, Self)>),
+    /// Describes a tuple of variable number of items.
     Tup(Vec<Self>),
-    Struct {name: Box<Self>, fields: Vec<Self>},
-    Enum {name: Box<Self>, variants: Vec<Self>},
-    Instance {class: usize, data: Option<Box<Self>>},
-    InstanceTy {ty: Box<Self>, data: Option<Box<Self>>},
+    /// Describes a struct.
+    Struct {
+        /// Name of struct.
+        name: Box<Self>,
+        /// Fields of struct.
+        fields: Vec<Self>
+    },
+    /// Describes an enum.
+    Enum {
+        /// Name of enum.
+        name: Box<Self>,
+        /// Variants of enum.
+        variants: Vec<Self>
+    },
+    /// Instance with type reference.
+    Instance {
+        /// A index referencing the type of instance.
+        class: usize,
+        /// Data of instance, if any.
+        data: Option<Box<Self>>,
+    },
+    /// Instance with explicit type.
+    InstanceTy {
+        /// The explicit type of instance.
+        ty: Box<Self>,
+        /// Data of instance, if any.
+        data: Option<Box<Self>>
+    },
 }
 
 impl Root {
+    /// The `Self` type.
     pub fn ty_self() -> Root {
         Root::Ty(Arc::new("Self".into()))
     }
 
+    /// The `Arc` type.
     pub fn ty_arc() -> Root {
         Root::Ty(Arc::new("Arc".into()))
     }
 
+    /// The `String` type.
     pub fn ty_string() -> Root {
         Root::Ty(Arc::new("String".into()))
     }
 
+    /// The `f64` type.
     pub fn ty_f64() -> Root {
         Root::Ty(Arc::new("f64".into()))
     }
 
+    /// The `bool` type.
     pub fn ty_bool() -> Root {
         Root::Ty(Arc::new("bool".into()))
     }
 
+    /// The `Box` type.
     pub fn ty_box() -> Root {
         Root::Ty(Arc::new("box".into()))
     }
 
+    /// The `usize` type.
     pub fn ty_usize() -> Root {
         Root::Ty(Arc::new("usize".into()))
     }
 
+    /// The `Option` type.
     pub fn ty_option() -> Root {
         Root::Ty(Arc::new("Option".into()))
     }
 
+    /// The `Vec` type.
     pub fn ty_vec() -> Root {
         Root::Ty(Arc::new("Vec".into()))
     }
 }
 
+/// Hard coded self description.
 pub fn root_self() -> Root {
     use Root::*;
 
@@ -157,7 +250,6 @@ pub fn root_self() -> Root {
                     ]),
                 ],
             },
-            // InstanceTy {ty: Box<Self>, data: Option<Box<Self>>},
             Struct {
                 name: Box::new(Str(Arc::new("InstanceTy".into()))),
                 fields: vec![

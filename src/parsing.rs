@@ -1,3 +1,5 @@
+//! Parsing of knowledge format.
+
 use crate::*;
 
 use piston_meta::{Convert, Range};
