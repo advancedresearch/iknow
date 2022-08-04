@@ -1,0 +1,6 @@
+enum EdgeDir {
+    Left,
+    Right,
+    Both,
+    None,
+}

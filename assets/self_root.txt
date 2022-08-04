@@ -1,0 +1,12 @@
+enum Root {
+    Ty(Arc<String>),
+    Str(Arc<String>),
+    F64(f64),
+    Bool(bool),
+    Avatar(Box<(Self, Self)>),
+    Tup(Vec<Self>),
+    Struct {name: Box<Self>, fields: Vec<Self>},
+    Enum {name: Box<Self>, variants: Vec<Self>},
+    Instance {class: usize, data: Option<Box<Self>>},
+    InstanceTy {ty: Box<Self>, data: Option<Box<Self>>},
+}

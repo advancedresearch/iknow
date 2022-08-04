@@ -1,0 +1,4 @@
+enum Node {
+    Str(Arc<String>),
+    F64(f64),
+}

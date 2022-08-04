@@ -1,0 +1,4 @@
+[
+  Str("Donald"),
+  Str("Duck"),
+]
