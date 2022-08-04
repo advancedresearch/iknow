@@ -48,6 +48,14 @@
 //!     InstanceTy {ty: Box<Self<.T>>, data: Option<Box<Self<.T>>>},
 //! }
 //! ```
+//!
+//! ### Origin of name "Iknow"
+//!
+//! In the Star Wars V movie, Han Solo is frozen while Leia is watching.
+//!
+//! Leia: "I love you"
+//!
+//! Han: "I know"
 
 use std::sync::Arc;
 use std::fmt;
