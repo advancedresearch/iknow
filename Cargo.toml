@@ -2,6 +2,13 @@
 name = "iknow"
 version = "0.1.0"
 edition = "2021"
+keywords = ["advancedresearch", "knowledge", "format", "self", "describing"]
+description = "A self-describing knowledge format with support for Rust-like syntax"
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/advancedresearch/iknow.git"
+homepage = "https://github.com/advancedresearch/iknow"
+exclude = ["source/*"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
