@@ -1,0 +1,3 @@
+[
+    [0, 1, (ins (ty "EdgeDir") "Left")],
+]

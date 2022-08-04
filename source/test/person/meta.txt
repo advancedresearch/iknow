@@ -1,0 +1,5 @@
+struct Meta {
+    format: Arc<String>,
+    data: Arc<String>,
+    output: Arc<String>,
+}

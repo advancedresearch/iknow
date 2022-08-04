@@ -1,0 +1,7 @@
+[
+  [
+    "source/test/person/person.txt",
+    "source/test/person/table-data.txt",
+    "source/test/person/person-with-instance.txt",
+  ]
+]

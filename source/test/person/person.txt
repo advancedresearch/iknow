@@ -1,0 +1,4 @@
+struct Person {
+  first_name: Arc<String>,
+  last_name: Arc<String>,
+}

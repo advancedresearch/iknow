@@ -1,0 +1,8 @@
+[
+  struct Person {
+    first_name: Arc<String>,
+    last_name: Arc<String>,
+  },
+  (ins 0 ["Donald", "Duck"]),
+  (ins 0 ["Dolly", "Duck"])
+]

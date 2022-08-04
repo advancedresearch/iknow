@@ -1,0 +1,55 @@
+_seps: "(){}<>[],:.\""
+
+10 enum_var = [{expr_left:"ty" .._seps!:"ty"} "::" {expr:"data" .._seps!:"data"}]
+9 expr_left = {
+  "Self":"self"
+  "String":"string"
+  "Arc":"arc"
+  "Box":"box"
+  "Option":"opt"
+  "Vec":"vec"
+  "f64":"f64"
+  "bool":"bool"
+  "usize":"usize"
+  enum:"enum"
+  struct:"struct"
+  tup:"tup"
+  ty:"ty"
+  ins:"ins"
+  .t!:"str"
+  .$_:"num"
+}
+8 tup_field = [{expr_left:"item" .._seps!:"item"} .w? ":" .w? expr:"item"]
+7 struct = [{
+  ["struct" .w! {ava:"ava" .t!:"name" .._seps!:"name"}]
+  [?["struct" .w!] {.t!:"name" .._seps!:"name"}]
+} .w! "{" .w?
+  .s?([.w? "," .w?] expr:"field")
+.w? "}"]
+6 ins = ["(ins" .w! {.$:"class" expr:"ty"} ?[.w! expr:"data"] ")"]
+5 ty = {
+  {["." .._seps!:"name"]}
+  ["(ty" .w! {.t!:"name" .._seps!:"name"} .w? ")"]
+}
+4 ava = {
+  ["(ava" .w! expr:"a" .w! expr:"b" .w? ")"]
+  [{expr_left:"a" .._seps!:"a"} {
+    ["<" .w? expr:"b" .w? ">"]
+    ["(" .w? expr:"b" .w? ")"]
+  }]
+}
+3 tup = {
+  ["[" .w? .s?([.w? "," .w?] expr:"item") .w? "]"]
+  ["(tup" .w! .s?(.w! expr:"item") .w? ")"]
+  ["(" .w? .s?([.w? "," .w?] expr:"item") .w? ")"]
+}
+2 enum = ["enum" .w! {ava:"ava" .t!:"name" .._seps!:"name"} .w! "{" .w?
+  .s?([.w? "," .w?] {expr:"variant" .._seps!:"item"})
+.w? "}"]
+1 expr = {
+  tup_field:"tup"
+  ava:"ava"
+  enum_var:"enum_var"
+  expr_left
+}
+0 doc = [.w? expr:"expr" .w?]

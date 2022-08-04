@@ -1,0 +1,14 @@
+[
+  struct Meta {
+      format: Arc<String>,
+      data: Arc<String>,
+      output: Arc<String>,
+  },
+  (ins 0 [
+    [
+      "source/test/person/person.txt",
+      "source/test/person/table-data.txt",
+      "source/test/person/person-with-instance.txt",
+    ]
+  ]),
+]

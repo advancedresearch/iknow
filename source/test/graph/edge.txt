@@ -1,0 +1,5 @@
+struct Edge {
+    from: usize,
+    to: usize,
+    dir: (ty EdgeDir),
+}
